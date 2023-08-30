@@ -3,6 +3,9 @@ import Header from './components/Header.jsx';
 import Categories from './components/Categories.js';
 import Sort from './components/Sort.js';
 import PizzaBlock from './components/PizzaBlock.js';
+import pizzasItems from './utils/db.json';
+
+console.log(pizzasItems);
 
 function App() {
   return (
@@ -15,9 +18,11 @@ function App() {
               <Categories />
               <Sort />
             </div>
-            <h2 className="content__title">Все пиццы</h2>
+            <h2 className="content__title">All pizzes</h2>
             <div className="content__items">
-              <PizzaBlock />
+              {pizzasItems.map((el) => {
+                return <PizzaBlock key={el.id} {...el}></PizzaBlock>;
+              })}
             </div>
           </div>
         </div>
