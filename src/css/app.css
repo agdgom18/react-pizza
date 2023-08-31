@@ -1,3 +1,4 @@
+@import url(https://fonts.googleapis.com/css?family=Nunito:200,300,regular,500,600,700,800,900,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic);
 * {
   padding: 0;
   margin: 0;
@@ -219,6 +220,8 @@ a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 .categories ul li {
   background-color: #f9f9f9;
@@ -379,14 +382,14 @@ a {
 
 body {
   background-color: #ffdf8c;
-  @import url(https://fonts.googleapis.com/css?family=Nunito:200,300,regular,500,600,700,800,900,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic);
 }
 
 .wrapper {
   width: calc(100vw - 100px);
   height: 100%;
   background-color: #fff;
-  margin: 50px auto;
+  margin: 0px auto;
+  margin-top: 50px;
   border-radius: 10px;
   max-width: 1400px;
 }
@@ -403,9 +406,14 @@ body {
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-column-gap: 45px;
+     -moz-column-gap: 45px;
+          column-gap: 45px;
 }
 .content__top {
   display: -webkit-box;

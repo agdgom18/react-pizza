@@ -5,7 +5,7 @@
     "name": "Pepperoni Fresh with peppers",
     "types": [0, 1],
     "sizes": [26, 30, 40],
-    "price": 803,
+    "price": 12,
     "category": 0,
     "rating": 4
   },
@@ -15,7 +15,7 @@
     "name": "Cheese",
     "types": [0],
     "sizes": [26, 40],
-    "price": 245,
+    "price": 24,
     "category": 1,
     "rating": 6
   },
@@ -25,7 +25,7 @@
     "name": "Barbecue chicken",
     "types": [0],
     "sizes": [26, 40],
-    "price": 295,
+    "price": 29,
     "category": 1,
     "rating": 4
   },
@@ -35,7 +35,7 @@
     "name": "Sweet and sour chicken.",
     "types": [1],
     "sizes": [26, 30, 40],
-    "price": 275,
+    "price": 27,
     "category": 2,
     "rating": 2
   },
@@ -45,7 +45,7 @@
     "name": "Cheeseburger pizza",
     "types": [0, 1],
     "sizes": [26, 30, 40],
-    "price": 23,
+    "price": 27,
     "category": 3,
     "rating": 8
   },
@@ -92,7 +92,7 @@
   {
     "id": 9,
     "imageUrl": "https://dodopizza.azureedge.net/static/Img/Products/Pizza/ru-RU/30367198-f3bd-44ed-9314-6f717960da07.jpg",
-    "name": "Vegetables and mushrooms 🌱",
+    "name": "Vegetables and mushrooms",
     "types": [0, 1],
     "sizes": [26, 30, 40],
     "price": 19.99,

@@ -2,17 +2,17 @@
 @import './libs/normalize';
 
 @import './components/all';
-
+@import url(https://fonts.googleapis.com/css?family=Nunito:200,300,regular,500,600,700,800,900,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic);
 body {
   background-color: $background;
-  @import url(https://fonts.googleapis.com/css?family=Nunito:200,300,regular,500,600,700,800,900,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic);
 }
 
 .wrapper {
   width: calc(100vw - 100px);
   height: 100%;
   background-color: #fff;
-  margin: 50px auto;
+  margin: 0px auto;
+  margin-top: 50px;
   border-radius: 10px;
   max-width: 1400px;
 }
@@ -27,7 +27,9 @@ body {
   &__items {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
+    align-items: center;
+    column-gap: 45px;
   }
 
   &__top {
