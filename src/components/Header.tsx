@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import pizza from '../assets/img/pizza-logo.svg';
 
 const Header = () => {
@@ -5,15 +6,17 @@ const Header = () => {
     <>
       <header className="header">
         <div className="container">
-          <div className="header__logo">
-            <img width="38" src={pizza} alt="Pizza logo" />
-            <div>
-              <h1>React Pizza</h1>
-              <p>the most delicious pizza in the universe</p>
+          <Link to="/">
+            <div className="header__logo">
+              <img width="38" src={pizza} alt="Pizza logo" />
+              <div>
+                <h1>React Pizza</h1>
+                <p>the most delicious pizza in the universe</p>
+              </div>
             </div>
-          </div>
+          </Link>
           <div className="header__cart">
-            <a href="/cart.html" className="button button--cart">
+            <Link to="*" className="button button--cart">
               <span>20 $</span>
               <div className="button__delimiter"></div>
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -40,7 +43,7 @@ const Header = () => {
                 />
               </svg>
               <span>3</span>
-            </a>
+            </Link>
           </div>
         </div>
       </header>
