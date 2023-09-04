@@ -16,6 +16,7 @@ const Home = () => {
   }
   const [items, setItems] = React.useState<Pizza[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
+
   React.useEffect(() => {
     fetch('https://64f1da430e1e60602d245dfa.mockapi.io/items')
       .then((res) => res.json())
@@ -23,9 +24,11 @@ const Home = () => {
         setItems(arr);
         setIsLoading(false);
       });
+
+    window.scrollTo(0, 0); // scroling to Top alwasys after rendering page
   }, []);
   return (
-    <>
+    <div className="container">
       <div className="content__top">
         <Categories />
         <Sort />
@@ -42,7 +45,7 @@ const Home = () => {
 
         {}
       </div>
-    </>
+    </div>
   );
 };
 

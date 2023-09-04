@@ -70,10 +70,16 @@ body {
     align-items: center;
   }
 
+  .content__items {
+    display: block;
+  }
   .content__title {
     display: flex;
     align-items: center;
-    font-size: 32px;
+    font-size: 40px;
+    @media (max-width: 450px) {
+      text-align: center;
+    }
 
     svg {
       position: relative;
