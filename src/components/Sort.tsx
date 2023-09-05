@@ -1,14 +1,21 @@
 import React from 'react';
-
-const Sort = () => {
-  const sortType: string[] = ['popularity', 'price', 'alphabetically'];
+interface MyProps {
+  sortItems: object;
+  setSortItems: (arg: {}) => void;
+}
+const Sort: React.FC<MyProps> = ({ sortItems, setSortItems }) => {
   const [open, setOpen] = React.useState(false);
-  const [sort, setSort] = React.useState(0);
-  const sortName = sortType[sort];
-  const getActiveItem = (i: number) => {
-    setSort(i);
-    setOpen(false);
-  };
+
+  ///
+
+  const sortType: { name: string; sortProperty: string }[] = [
+    { name: 'popularity [ascending]', sortProperty: 'rating' },
+    { name: 'popularity [descending]', sortProperty: '-rating' },
+    { name: 'price [ascending]', sortProperty: 'price' },
+    { name: 'price [descending]', sortProperty: '-price' },
+    { name: 'alphabetically [ascending]', sortProperty: 'name' },
+    { name: 'alphabetically [descending]', sortProperty: '-name' },
+  ];
 
   return (
     <>
@@ -21,15 +28,15 @@ const Sort = () => {
             />
           </svg>
           <b>Sort by:</b>
-          <span onClick={() => setOpen(!open)}>{sortName}</span>
+          <span onClick={() => setOpen(!open)}>{sortItems.name}</span>
         </div>
         {open && (
           <div className="sort__popup">
             <ul>
               {sortType.map((el, idx) => {
                 return (
-                  <li onClick={() => getActiveItem(idx)} key={idx} className={sort === idx ? 'active' : ''}>
-                    {el}
+                  <li onClick={() => setSortItems(el)} key={idx} className={sortItems.sortProperty === el.sortProperty ? 'active' : ''}>
+                    {el.name}
                   </li>
                 );
               })}

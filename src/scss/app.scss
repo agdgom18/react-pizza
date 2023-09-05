@@ -43,7 +43,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    @media (max-width: 1050px) {
+    flex-wrap: wrap;
+    @media (max-width: 1067px) {
+      align-items: flex-start;
       flex-direction: column-reverse;
       row-gap: 30px;
     }

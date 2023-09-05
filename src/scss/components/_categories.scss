@@ -3,7 +3,7 @@
 .categories {
   ul {
     display: flex;
-
+    flex-wrap: wrap;
     row-gap: 30px;
 
     @media (max-width: 1004px) {

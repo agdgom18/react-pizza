@@ -17,21 +17,37 @@ const Home = () => {
   const [items, setItems] = React.useState<Pizza[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
+  // props drilling
+  const [category, setCategory] = React.useState<number>(0);
+  const [sortItems, setSortItems] = React.useState({
+    name: 'popularity',
+    sortProperty: 'rating',
+  });
+
   React.useEffect(() => {
-    fetch('https://64f1da430e1e60602d245dfa.mockapi.io/items')
+    setIsLoading(true);
+
+    // simplify logic
+    const categoryOrder = category > 0 ? `category=${category}` : '';
+    const sortOrder = sortItems.sortProperty.includes('-') ? 'asc' : 'desc';
+
+    const sortBy = sortItems.sortProperty.includes('-') ? sortItems.sortProperty.replace('-', '') : sortItems.sortProperty;
+
+    fetch(`https://64f1da430e1e60602d245dfa.mockapi.io/items?${categoryOrder}&sortBy=${sortBy}&order=${sortOrder}`)
       .then((res) => res.json())
       .then((arr: Pizza[]) => {
         setItems(arr);
+
         setIsLoading(false);
       });
-
     window.scrollTo(0, 0); // scroling to Top alwasys after rendering page
-  }, []);
+  }, [category, sortItems]);
+
   return (
     <div className="container">
       <div className="content__top">
-        <Categories />
-        <Sort />
+        <Categories category={category} onClickCategory={(index: number) => setCategory(index)} />
+        <Sort sortItems={sortItems} setSortItems={(index: object) => setSortItems(index)} />
       </div>
       <h2 className="content__title">All pizzes</h2>
       <div className="content__items">

@@ -1,21 +1,24 @@
 import React from 'react';
 
-const Categories = () => {
+interface MyProps {
+  category: number;
+  onClickCategory: (arg: number) => void;
+}
+const Categories: React.FC<MyProps> = ({ category, onClickCategory }) => {
   const categoryList = ['All', 'Meat', 'Vegetarian', 'Grill', 'Spicy', 'Closed'];
-  const [activeCategory, setActiveCategory] = React.useState(0);
 
-  const onClickCategory = (index: number) => {
-    setActiveCategory(index);
-  };
+  // const onClickCategory = (index: number) => {
+  //   setActiveCategory(index);
+  // };
 
   return (
     <>
       <div className="categories">
         <ul>
-          {categoryList.map((el, index) => {
+          {categoryList.map((categoryName, index) => {
             return (
-              <li onClick={() => onClickCategory(index)} className={activeCategory === index ? 'active' : ''} key={index}>
-                {el}
+              <li onClick={() => onClickCategory(index)} className={category === index ? 'active' : ''} key={index}>
+                {categoryName}
               </li>
             );
           })}
