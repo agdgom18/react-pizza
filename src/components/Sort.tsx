@@ -1,7 +1,11 @@
 import React from 'react';
+interface SortItem {
+  name: string;
+  sortProperty: string;
+}
 interface MyProps {
-  sortItems: object;
-  setSortItems: (arg: {}) => void;
+  sortItems: SortItem;
+  setSortItems: (newSortItem: SortItem) => void;
 }
 const Sort: React.FC<MyProps> = ({ sortItems, setSortItems }) => {
   const [open, setOpen] = React.useState(false);
