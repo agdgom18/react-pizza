@@ -20,7 +20,7 @@ interface SortItem {
 }
 
 const Home: React.FC = () => {
-  const initialSortItem: SortItem = { name: 'popularity [ascending]', sortProperty: 'rating' };
+  const initialSortItem: SortItem = { name: 'popularity A-Z', sortProperty: 'rating' };
   const [items, setItems] = React.useState<Pizza[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
