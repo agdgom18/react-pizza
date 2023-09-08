@@ -4,13 +4,15 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home.js';
 import NotFound from './pages/NotFoundPage.js';
 import Cart from './pages/Cart.js';
+import React from 'react';
 function App() {
   // https://64f1da430e1e60602d245dfa.mockapi.io/items
 
+  const [searchValue, setSearchValue] = React.useState<string>('');
   return (
     <>
       <div className="wrapper">
-        <Header />
+        <Header searchValue={searchValue} setSearchValue={setSearchValue} />
         <div className="content">
           <Routes>
             <Route path="/" element={<Home />}></Route>

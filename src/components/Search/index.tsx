@@ -1,6 +1,12 @@
 import searchIcon from '../../assets/img/search.svg';
 import styles from './Search.module.scss';
-const Search = () => {
+
+interface MyInterface {
+  searchValue: string;
+  setSearchValue(): string;
+}
+
+const Search: React.FC<MyInterface> = ({ searchValue, setSearchValue }) => {
   return (
     <div className={styles.root}>
       <img className={styles.searchIcon} src={searchIcon} alt="searchIcon" />
