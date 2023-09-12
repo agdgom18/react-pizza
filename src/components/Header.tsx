@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import pizza from '../assets/img/pizza-logo.svg';
 import Search from './Search';
-interface MyInterface {
-  searchValue: string;
-  setSearchValue(): string;
-}
-const Header: React.FC<MyInterface> = ({ searchValue, setSearchValue }) => {
+// export interface MyInterfaceHeader {
+//   searchValue?: string;
+//   setSearchValue: (param1: string) => string | unknown;
+// }
+const Header = () => {
   return (
     <>
       <header className="header">
@@ -19,7 +19,7 @@ const Header: React.FC<MyInterface> = ({ searchValue, setSearchValue }) => {
               </div>
             </div>
           </Link>
-          <Search searchValue={searchValue} setSearchValue={setSearchValue} />
+          <Search />
           <div className="header__cart">
             <Link to="*" className="button button--cart">
               <span>20 $</span>

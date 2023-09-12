@@ -5,21 +5,31 @@
 .input {
   border: 1px solid rgba(0, 0, 0, 0.1);
   padding: 12px 40px;
-  width: 300px;
+  width: 400px;
   border-radius: 12px;
   font-size: 16px;
   transition: all 0.15s ease-in-out;
-  &:focus {
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    width: 400px;
-  }
 }
 
 .searchIcon {
   width: 24px;
   height: 24px;
-  opacity: 0.5;
+  opacity: 0.3;
   position: absolute;
   left: 10px;
   top: 12px;
+}
+
+.cancelIcon {
+  opacity: 0.3;
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  right: 10px;
+  top: 15px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
 }
