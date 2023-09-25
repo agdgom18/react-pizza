@@ -3,6 +3,8 @@ import Categories from '../components/Categories.js';
 import Sort from '../components/Sort.js';
 import PizzaBlock from '../components/PizzaBLock/';
 import Skeleton from '../components/PizzaBLock/Skeleton.js';
+
+import { SearchContext } from '../App.js';
 interface Pizza {
   id: number;
   imageUrl: string;
@@ -20,8 +22,10 @@ interface SortItem {
 }
 
 const Home: React.FC = () => {
+  const { searchValue } = React.useContext(SearchContext)!;
   const initialSortItem: SortItem = { name: 'popularity A-Z', sortProperty: 'rating' };
   const [items, setItems] = React.useState<Pizza[]>([]);
+  // const [currentPage, setCurrentPage] = React.useState<number>(1);
   const [isLoading, setIsLoading] = React.useState(true);
 
   // props drilling
@@ -36,8 +40,9 @@ const Home: React.FC = () => {
     const sortOrder = sortItems.sortProperty.includes('-') ? 'asc' : 'desc';
 
     const sortBy = sortItems.sortProperty.includes('-') ? sortItems.sortProperty.replace('-', '') : sortItems.sortProperty;
+    const search = searchValue ? `search=${searchValue}` : '';
 
-    fetch(`https://64f1da430e1e60602d245dfa.mockapi.io/items?${categoryOrder}&sortBy=${sortBy}&order=${sortOrder}`)
+    fetch(`https://64f1da430e1e60602d245dfa.mockapi.io/items?${categoryOrder}&sortBy=${sortBy}&order=${sortOrder}&${search}`)
       .then((res) => res.json())
       .then((arr: Pizza[]) => {
         setItems(arr);
@@ -45,7 +50,16 @@ const Home: React.FC = () => {
         setIsLoading(false);
       });
     window.scrollTo(0, 0); // scroling to Top alwasys after rendering page
-  }, [category, sortItems]);
+  }, [category, sortItems, searchValue]);
+
+  // if searchValue is empty , fileter does not work and rendering all items
+  const pizzas = items
+    .filter((item) => {
+      return item.name.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase());
+    })
+
+    .map((item) => <PizzaBlock key={item.id} {...item} />);
+  const skeleton = [...new Array(6)].map((_, idx) => <Skeleton key={idx} />);
 
   return (
     <div className="container">
@@ -54,17 +68,9 @@ const Home: React.FC = () => {
         <Sort sortItems={sortItems} setSortItems={(newSortItem: SortItem) => setSortItems(newSortItem)} />
       </div>
       <h2 className="content__title">All pizzes</h2>
-      <div className="content__items">
-        {isLoading
-          ? [...new Array(6)].map((_, idx) => {
-              return <Skeleton key={idx}></Skeleton>;
-            })
-          : items.map((el) => {
-              return <PizzaBlock key={el.id} {...el}></PizzaBlock>;
-            })}
+      <div className="content__items">{isLoading ? skeleton : pizzas}</div>
 
-        {}
-      </div>
+      {/* <Pagination onChangePage={(number) => setCurrentPage(number)} /> */}
     </div>
   );
 };

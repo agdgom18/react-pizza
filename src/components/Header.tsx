@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom';
 import pizza from '../assets/img/pizza-logo.svg';
-
+import Search from './Search';
+// export interface MyInterfaceHeader {
+//   searchValue?: string;
+//   setSearchValue: (param1: string) => string | unknown;
+// }
 const Header = () => {
   return (
     <>
@@ -15,6 +19,7 @@ const Header = () => {
               </div>
             </div>
           </Link>
+          <Search />
           <div className="header__cart">
             <Link to="*" className="button button--cart">
               <span>20 $</span>
