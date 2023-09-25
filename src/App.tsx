@@ -5,7 +5,12 @@ import Home from './pages/Home.js';
 import NotFound from './pages/NotFoundPage.js';
 import Cart from './pages/Cart.js';
 import React from 'react';
-export const SearchContext = React.createContext('');
+
+export type ISearch = {
+  searchValue: string;
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+};
+export const SearchContext = React.createContext<ISearch | null>(null);
 function App() {
   // https://64f1da430e1e60602d245dfa.mockapi.io/items
 

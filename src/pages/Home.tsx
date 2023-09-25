@@ -20,13 +20,9 @@ interface SortItem {
   name: string;
   sortProperty: string;
 }
-interface IsearchValue {
-  searchValue: string;
-  setSearchValue?: (value: string) => string;
-}
 
 const Home: React.FC = () => {
-  const { searchValue } = React.useContext<IsearchValue>(SearchContext);
+  const { searchValue } = React.useContext(SearchContext)!;
   const initialSortItem: SortItem = { name: 'popularity A-Z', sortProperty: 'rating' };
   const [items, setItems] = React.useState<Pizza[]>([]);
   // const [currentPage, setCurrentPage] = React.useState<number>(1);
