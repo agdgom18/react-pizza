@@ -19,35 +19,28 @@ interface Pizza {
   rating?: number;
 }
 
-interface SortItem {
-  name: string;
-  sortProperty: string;
-}
-
 const Home: React.FC = () => {
   //usuing redux
-  const category = useSelector((state: RootState) => state.filter.categoryId);
+  const { categoryId, sort } = useSelector((state: RootState) => state.filter);
+  const sortItems = sort.sortProperty;
+
   const dispatch = useDispatch();
   const onChangeCategory = (index: number) => {
-    console.log(index);
     dispatch(setCategoryId(index));
   };
 
   const { searchValue } = React.useContext(SearchContext)!;
-  const initialSortItem: SortItem = { name: 'popularity A-Z', sortProperty: 'rating' };
   const [items, setItems] = React.useState<Pizza[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
-  // props drilling
-  const [sortItems, setSortItems] = React.useState<SortItem>(initialSortItem);
-
   React.useEffect(() => {
     setIsLoading(true);
-    // simplify logic
-    const categoryOrder = category > 0 ? `category=${category}` : '';
-    const sortOrder = sortItems.sortProperty.includes('-') ? 'asc' : 'desc';
 
-    const sortBy = sortItems.sortProperty.includes('-') ? sortItems.sortProperty.replace('-', '') : sortItems.sortProperty;
+    // simplify logic
+    const categoryOrder = categoryId > 0 ? `category=${categoryId}` : '';
+    const sortOrder = sortItems.includes('-') ? 'asc' : 'desc';
+
+    const sortBy = sortItems.includes('-') ? sortItems.replace('-', '') : sortItems;
     const search = searchValue ? `search=${searchValue}` : '';
 
     fetch(`https://64f1da430e1e60602d245dfa.mockapi.io/items?${categoryOrder}&sortBy=${sortBy}&order=${sortOrder}&${search}`)
@@ -58,7 +51,7 @@ const Home: React.FC = () => {
         setIsLoading(false);
       });
     window.scrollTo(0, 0); // scroling to Top alwasys after rendering page
-  }, [category, sortItems, searchValue]);
+  }, [categoryId, sortItems, searchValue]);
 
   // if searchValue is empty , fileter does not work and rendering all items
   const pizzas = items
@@ -72,13 +65,11 @@ const Home: React.FC = () => {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories category={category} onClickCategory={onChangeCategory} />
-        <Sort sortItems={sortItems} setSortItems={(newSortItem: SortItem) => setSortItems(newSortItem)} />
+        <Categories category={categoryId} onClickCategory={onChangeCategory} />
+        <Sort />
       </div>
       <h2 className="content__title">All pizzes</h2>
       <div className="content__items">{isLoading ? skeleton : pizzas}</div>
-
-      {/* <Pagination onChangePage={(number) => setCurrentPage(number)} /> */}
     </div>
   );
 };

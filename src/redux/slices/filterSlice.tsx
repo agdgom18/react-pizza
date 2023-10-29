@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import type { PayloadAction } from '@reduxjs/toolkit';
 
 export interface IState {
   categoryId: number;
@@ -9,7 +8,7 @@ export interface IState {
   };
 }
 
-const initialState: IState = {
+const initialState = {
   categoryId: 0,
   sort: {
     name: 'popularity A-Z',
@@ -22,12 +21,14 @@ export const filterSlice = createSlice({
   initialState,
   reducers: {
     setCategoryId(state, action) {
-      console.log(action);
-
       state.categoryId = action.payload;
+    },
+    setSort(state, action) {
+      state.sort = action.payload;
+      console.log(action);
     },
   },
 });
 
-export const { setCategoryId } = filterSlice.actions;
+export const { setCategoryId, setSort } = filterSlice.actions;
 export default filterSlice.reducer;
