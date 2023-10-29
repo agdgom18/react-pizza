@@ -1,10 +1,6 @@
 import { Link } from 'react-router-dom';
 import pizza from '../assets/img/pizza-logo.svg';
 import Search from './Search';
-// export interface MyInterfaceHeader {
-//   searchValue?: string;
-//   setSearchValue: (param1: string) => string | unknown;
-// }
 const Header = () => {
   return (
     <>

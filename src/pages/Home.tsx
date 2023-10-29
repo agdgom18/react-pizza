@@ -3,8 +3,11 @@ import Categories from '../components/Categories.js';
 import Sort from '../components/Sort.js';
 import PizzaBlock from '../components/PizzaBLock/';
 import Skeleton from '../components/PizzaBLock/Skeleton.js';
-
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState } from '../redux/store.js';
+import { setCategoryId } from '../redux/slices/filterSlice.js';
 import { SearchContext } from '../App.js';
+
 interface Pizza {
   id: number;
   imageUrl: string;
@@ -22,19 +25,24 @@ interface SortItem {
 }
 
 const Home: React.FC = () => {
+  //usuing redux
+  const category = useSelector((state: RootState) => state.filter.categoryId);
+  const dispatch = useDispatch();
+  const onChangeCategory = (index: number) => {
+    console.log(index);
+    dispatch(setCategoryId(index));
+  };
+
   const { searchValue } = React.useContext(SearchContext)!;
   const initialSortItem: SortItem = { name: 'popularity A-Z', sortProperty: 'rating' };
   const [items, setItems] = React.useState<Pizza[]>([]);
-  // const [currentPage, setCurrentPage] = React.useState<number>(1);
   const [isLoading, setIsLoading] = React.useState(true);
 
   // props drilling
-  const [category, setCategory] = React.useState<number>(0);
   const [sortItems, setSortItems] = React.useState<SortItem>(initialSortItem);
 
   React.useEffect(() => {
     setIsLoading(true);
-
     // simplify logic
     const categoryOrder = category > 0 ? `category=${category}` : '';
     const sortOrder = sortItems.sortProperty.includes('-') ? 'asc' : 'desc';
@@ -64,7 +72,7 @@ const Home: React.FC = () => {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories category={category} onClickCategory={(index: number) => setCategory(index)} />
+        <Categories category={category} onClickCategory={onChangeCategory} />
         <Sort sortItems={sortItems} setSortItems={(newSortItem: SortItem) => setSortItems(newSortItem)} />
       </div>
       <h2 className="content__title">All pizzes</h2>

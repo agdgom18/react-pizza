@@ -10,10 +10,9 @@ export type ISearch = {
   searchValue: string;
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
 };
+
 export const SearchContext = React.createContext<ISearch | null>(null);
 function App() {
-  // https://64f1da430e1e60602d245dfa.mockapi.io/items
-
   const [searchValue, setSearchValue] = React.useState<string>('');
 
   return (
