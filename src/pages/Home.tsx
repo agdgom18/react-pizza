@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../redux/store.js';
 import { setCategoryId } from '../redux/slices/filterSlice.js';
 import { SearchContext } from '../App.js';
+import Pagination from '../components/Pagination/index.js';
 
 interface Pizza {
   id: number;
@@ -32,6 +33,7 @@ const Home: React.FC = () => {
   const { searchValue } = React.useContext(SearchContext)!;
   const [items, setItems] = React.useState<Pizza[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [currantPage, setCurrantPage] = React.useState<number>(1);
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -43,7 +45,9 @@ const Home: React.FC = () => {
     const sortBy = sortItems.includes('-') ? sortItems.replace('-', '') : sortItems;
     const search = searchValue ? `search=${searchValue}` : '';
 
-    fetch(`https://64f1da430e1e60602d245dfa.mockapi.io/items?${categoryOrder}&sortBy=${sortBy}&order=${sortOrder}&${search}`)
+    fetch(
+      `https://64f1da430e1e60602d245dfa.mockapi.io/items?page=${currantPage}&limit=4&${categoryOrder}&sortBy=${sortBy}&order=${sortOrder}&${search}`,
+    )
       .then((res) => res.json())
       .then((arr: Pizza[]) => {
         setItems(arr);
@@ -51,7 +55,7 @@ const Home: React.FC = () => {
         setIsLoading(false);
       });
     window.scrollTo(0, 0); // scroling to Top alwasys after rendering page
-  }, [categoryId, sortItems, searchValue]);
+  }, [categoryId, sortItems, searchValue, currantPage]);
 
   // if searchValue is empty , fileter does not work and rendering all items
   const pizzas = items
@@ -70,6 +74,8 @@ const Home: React.FC = () => {
       </div>
       <h2 className="content__title">All pizzes</h2>
       <div className="content__items">{isLoading ? skeleton : pizzas}</div>
+
+      <Pagination onChangePage={(number) => setCurrantPage(number)} />
     </div>
   );
 };
