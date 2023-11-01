@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.6",
+    "axios": "^1.6.0",
+    "lodash.debounce": "^4.0.8",
     "qs": "^6.11.2",
     "react": "^18.2.0",
     "react-content-loader": "^6.2.1",
@@ -21,6 +23,7 @@
     "sass": "^1.66.1"
   },
   "devDependencies": {
+    "@types/lodash.debounce": "^4.0.8",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
     "@typescript-eslint/eslint-plugin": "^5.61.0",
