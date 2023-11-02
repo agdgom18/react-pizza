@@ -7,10 +7,6 @@ interface MyProps {
 const Categories: React.FC<MyProps> = ({ category, onClickCategory }) => {
   const categoryList = ['All', 'Meat', 'Vegetarian', 'Grill', 'Spicy', 'Closed'];
 
-  // const onClickCategory = (index: number) => {
-  //   setActiveCategory(index);
-  // };
-
   return (
     <>
       <div className="categories">

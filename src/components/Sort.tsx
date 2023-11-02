@@ -1,26 +1,29 @@
 import React from 'react';
-interface SortItem {
-  name: string;
-  sortProperty: string;
-}
-interface MyProps {
-  sortItems: SortItem;
-  setSortItems: (newSortItem: SortItem) => void;
-}
-const Sort: React.FC<MyProps> = ({ sortItems, setSortItems }) => {
+
+import { useSelector, useDispatch } from 'react-redux';
+import { setSort } from '../redux/slices/filterSlice';
+import type { RootState } from '../redux/store';
+
+export const sortType = [
+  { name: 'popularity A-Z', sortProperty: 'rating' },
+  { name: 'popularity Z-A', sortProperty: '-rating' },
+  { name: 'price A-Z', sortProperty: 'price' },
+  { name: 'price Z-A', sortProperty: '-price' },
+  { name: 'alphabetically A-Z', sortProperty: 'name' },
+  { name: 'alphabetically Z-A', sortProperty: '-name' },
+];
+
+const Sort = () => {
   const [open, setOpen] = React.useState(false);
 
-  ///
+  const dispatch = useDispatch();
+  const sort = useSelector((state: RootState) => state.filter.sort);
 
-  const sortType: { name: string; sortProperty: string }[] = [
-    { name: 'popularity A-Z', sortProperty: 'rating' },
-    { name: 'popularity Z-A', sortProperty: '-rating' },
-    { name: 'price A-Z', sortProperty: 'price' },
-    { name: 'price Z-A', sortProperty: '-price' },
-    { name: 'alphabetically A-Z', sortProperty: 'name' },
-    { name: 'alphabetically Z-A', sortProperty: '-name' },
-  ];
+  const onClickListItem = (obj: unknown) => {
+    dispatch(setSort(obj));
 
+    setOpen(!open);
+  };
   return (
     <>
       <div className="sort">
@@ -32,14 +35,14 @@ const Sort: React.FC<MyProps> = ({ sortItems, setSortItems }) => {
             />
           </svg>
           <b>Sort by:</b>
-          <span onClick={() => setOpen(!open)}>{sortItems.name}</span>
+          <span onClick={() => setOpen(!open)}>{sort.name}</span>
         </div>
         {open && (
           <div className="sort__popup">
             <ul>
               {sortType.map((el, idx) => {
                 return (
-                  <li onClick={() => setSortItems(el)} key={idx} className={sortItems.sortProperty === el.sortProperty ? 'active' : ''}>
+                  <li onClick={() => onClickListItem(el)} key={idx} className={sort.sortProperty === el.sortProperty ? 'active' : ''}>
                     {el.name}
                   </li>
                 );
