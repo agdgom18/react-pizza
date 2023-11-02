@@ -3,19 +3,17 @@ import cancelIcon from '../../assets/img/cancel.svg';
 import styles from './Search.module.scss';
 import React, { RefObject, createRef, useCallback } from 'react';
 import debounce from 'lodash.debounce';
+import { useDispatch } from 'react-redux';
+import { setSearchValue } from '../../redux/slices/searchSlice';
 
-import { SearchContext } from '../../App';
-interface IsearchValue {
-  searchValue: string;
-  setSearchValue: (value: string) => string;
-}
 const Search = (): JSX.Element => {
   const [value, setValue] = React.useState('');
 
-  const { searchValue, setSearchValue } = React.useContext<IsearchValue>(SearchContext);
+  const dispatch = useDispatch();
+
   const inputRef: RefObject<HTMLInputElement> = createRef();
   const onClickClear = () => {
-    setSearchValue('');
+    dispatch(setSearchValue(''));
     setValue('');
     inputRef.current?.focus();
   };
@@ -24,7 +22,7 @@ const Search = (): JSX.Element => {
 
   const updateSearchValue = useCallback(
     debounce((str: string) => {
-      setSearchValue(str);
+      dispatch(setSearchValue(str));
     }, 250),
     [],
   );

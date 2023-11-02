@@ -7,7 +7,6 @@ import Skeleton from '../components/PizzaBLock/Skeleton.js';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../redux/store.js';
 import { setCategoryId, setCurrentPage } from '../redux/slices/filterSlice.js';
-import { SearchContext } from '../App.js';
 import Pagination from '../components/Pagination/index.js';
 
 interface Pizza {
@@ -25,17 +24,16 @@ const Home: React.FC = () => {
   //usuing redux
   const { categoryId, sort, currentPage } = useSelector((state: RootState) => state.filter);
   const sortItems = sort.sortProperty;
-
   const dispatch = useDispatch();
   const onChangeCategory = (index: number) => {
     dispatch(setCategoryId(index));
   };
-
   const onChangePage = (number: number) => {
     dispatch(setCurrentPage(number));
   };
 
-  const { searchValue } = React.useContext(SearchContext)!;
+  const searchValue = useSelector((state: RootState) => state.search.searchValue);
+
   const [items, setItems] = React.useState<Pizza[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
