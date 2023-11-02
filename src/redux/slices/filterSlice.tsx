@@ -2,14 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export interface IState {
   categoryId: number;
-  currentPage: number;
+  currentPage: number | string;
   sort: {
     name: string;
     sortProperty: string;
   };
 }
 
-const initialState = {
+const initialState: IState = {
   categoryId: 0,
   currentPage: 1,
   sort: {
@@ -27,13 +27,17 @@ export const filterSlice = createSlice({
     },
     setSort(state, action) {
       state.sort = action.payload;
-      console.log(action);
     },
     setCurrentPage(state, action) {
       state.currentPage = action.payload;
     },
+    setFilters(state, action) {
+      state.sort = action.payload.sort;
+      state.currentPage = Number(action.payload.currentPage);
+      state.categoryId = Number(action.payload.categoryId);
+    },
   },
 });
 
-export const { setCategoryId, setCurrentPage, setSort } = filterSlice.actions;
+export const { setCategoryId, setCurrentPage, setSort, setFilters } = filterSlice.actions;
 export default filterSlice.reducer;
