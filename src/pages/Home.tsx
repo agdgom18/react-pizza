@@ -65,11 +65,8 @@ const Home: React.FC = () => {
   // if there was a first rendering , that checking URL parametres and save them in redux toolkit
   React.useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.slice(1));
-      console.log(params);
-
+      const params = qs.parse(window.location.search.substring(1));
       const sort = sortType.find((obj) => obj.sortProperty === params.sortItems);
-
       dispatch(
         setFilters({
           ...params,
@@ -80,10 +77,10 @@ const Home: React.FC = () => {
     }
   }, []);
 
-  //  if there was firat render  requesting our pizzas
+  //  if there was first render  requesting our pizzas
   React.useEffect(() => {
     window.scrollTo(0, 0);
-    if (isSearch.current) {
+    if (!isSearch.current) {
       fetchPizzas();
     }
     isSearch.current = false;
@@ -98,6 +95,7 @@ const Home: React.FC = () => {
         categoryId,
         currentPage,
       });
+      fetchPizzas();
       navigate(`?${queryString}`);
     }
 
