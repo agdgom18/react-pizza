@@ -8,7 +8,7 @@ interface iCartItem {
   price: number;
   imageUrl: string;
   types: number;
-  id: number;
+  id?: any;
   count: number;
 }
 
@@ -22,7 +22,11 @@ const CartItem: React.FC<iCartItem> = ({ id, name, types, price, count, imageUrl
       }),
     );
   };
+
   const decrementCount = () => {
+    if (!count) {
+      return;
+    }
     dispatch(decrementItem(id));
   };
   const onClickRemoveItem = () => {
