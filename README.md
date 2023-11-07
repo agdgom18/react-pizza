@@ -1,3 +1,3 @@
 # react-pizza
 
-Site: https://agdgompizzas.netlify.app/
+Site: https://react-pizza-fawn-three.vercel.app/
