@@ -39,7 +39,7 @@ const Home: React.FC = () => {
     dispatch(setCurrentPage(number));
   };
 
-  const fetchPizzas = () => {
+  const fetchPizzas = async () => {
     setIsLoading(true);
     // simplify logic
     const categoryOrder = categoryId > 0 ? `category=${categoryId}` : '';
@@ -48,14 +48,18 @@ const Home: React.FC = () => {
     const sortBy = sortItems.includes('-') ? sortItems.replace('-', '') : sortItems;
     const search = searchValue ? `search=${searchValue}` : '';
 
-    axios
-      .get(
+    try {
+      const res = await axios.get(
         `https://64f1da430e1e60602d245dfa.mockapi.io/items?page=${currentPage}&limit=4&${categoryOrder}&sortBy=${sortBy}&order=${sortOrder}&${search}`,
-      )
-      .then((res) => {
-        setItems(res.data);
-        setIsLoading(false);
-      });
+      );
+      setItems(res.data);
+    } catch (error) {
+      console.log(error);
+      alert('Somenthing is wrong');
+    } finally {
+      setIsLoading(false);
+    }
+    window.scrollTo(0, 0);
   };
 
   const searchValue = useSelector((state: RootState) => state.search.searchValue);
@@ -79,7 +83,6 @@ const Home: React.FC = () => {
 
   //  if there was first render  requesting our pizzas
   React.useEffect(() => {
-    window.scrollTo(0, 0);
     if (!isSearch.current) {
       fetchPizzas();
     }

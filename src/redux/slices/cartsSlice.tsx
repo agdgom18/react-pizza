@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 export interface IcartSlice {
   totalPrice: number;
-  items: Array<any>;
+  items: Array<{ id?: number; count?: number; price?: number }>;
 }
 
 const initialState: IcartSlice = {
@@ -15,7 +15,7 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addItem(state, action: PayloadAction<any>) {
+    addItem(state, action: PayloadAction<IcartSlice>) {
       const findItem = state.items.find((obj) => obj.id === action.payload.id);
 
       if (findItem) {
@@ -40,7 +40,7 @@ export const cartSlice = createSlice({
       }, 0);
     },
 
-    removeItem(state, action: PayloadAction) {
+    removeItem(state, action: PayloadAction<number>) {
       state.items = state.items.filter((obj) => obj.id !== action.payload);
     },
 
