@@ -6,6 +6,7 @@ import Sort from '../components/Sort.js';
 import PizzaBlock from '../components/PizzaBLock/';
 import Skeleton from '../components/PizzaBLock/Skeleton.js';
 
+import { PizzasDataParams } from '../redux/slices/pizzasSlice.js';
 import { sortType } from '../components/Sort.js';
 
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +14,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../redux/store.js';
 import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice.js';
 import Pagination from '../components/Pagination/index.js';
+import { pizzasData } from '../redux/slices/pizzasSlice.js';
+import CartEmpty from '../components/CartEmpty.js';
 
 interface Pizza {
   id: number;
@@ -39,8 +42,9 @@ const Home: React.FC = () => {
     dispatch(setCurrentPage(number));
   };
 
+  const { pizzasItems, loading, error } = useSelector((state: RootState) => state.pizzas);
+
   const fetchPizzas = async () => {
-    setIsLoading(true);
     // simplify logic
     const categoryOrder = categoryId > 0 ? `category=${categoryId}` : '';
     const sortOrder = sortItems.includes('-') ? 'asc' : 'desc';
@@ -48,23 +52,19 @@ const Home: React.FC = () => {
     const sortBy = sortItems.includes('-') ? sortItems.replace('-', '') : sortItems;
     const search = searchValue ? `search=${searchValue}` : '';
 
-    try {
-      const res = await axios.get(
-        `https://64f1da430e1e60602d245dfa.mockapi.io/items?page=${currentPage}&limit=4&${categoryOrder}&sortBy=${sortBy}&order=${sortOrder}&${search}`,
-      );
-      setItems(res.data);
-    } catch (error) {
-      console.log(error);
-      alert('Somenthing is wrong');
-    } finally {
-      setIsLoading(false);
-    }
+    dispatch(
+      pizzasData({
+        categoryOrder,
+        sortOrder,
+        sortBy,
+        search,
+        currentPage,
+      } as PizzasDataParams),
+    );
     window.scrollTo(0, 0);
   };
 
   const searchValue = useSelector((state: RootState) => state.search.searchValue);
-  const [items, setItems] = React.useState<Pizza[]>([]);
-  const [isLoading, setIsLoading] = React.useState(true);
 
   // if there was a first rendering , that checking URL parametres and save them in redux toolkit
   React.useEffect(() => {
@@ -106,7 +106,7 @@ const Home: React.FC = () => {
   }, [categoryId, sortItems, searchValue, currentPage]);
 
   // if searchValue is empty , fileter does not work and rendering all items
-  const pizzas = items
+  const pizzas = pizzasItems
     .filter((item) => {
       return item.name.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase());
     })
@@ -120,8 +120,20 @@ const Home: React.FC = () => {
         <Categories category={categoryId} onClickCategory={onChangeCategory} />
         <Sort />
       </div>
+
       <h2 className="content__title">All pizzes</h2>
-      <div className="content__items">{isLoading ? skeleton : pizzas}</div>
+
+      {error ? (
+        <div className="content__error-info">
+          <h2>
+            An error happened
+            <span>😕</span>
+          </h2>
+          <p> An error happened Failed to download the pizzas try again later</p>
+        </div>
+      ) : (
+        <div className="content__items">{loading ? skeleton : pizzas}</div>
+      )}
 
       <Pagination onChangePage={onChangePage} />
     </div>
