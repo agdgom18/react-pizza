@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-
+import type { RootState } from '../store';
 interface State {
   pizzasItems: unknown[];
   loading: boolean;
@@ -57,5 +57,7 @@ const pizzasSlice = createSlice({
     });
   },
 });
+
+export const selectPizzas = (state: RootState) => state.pizzas;
 
 export default pizzasSlice.reducer;

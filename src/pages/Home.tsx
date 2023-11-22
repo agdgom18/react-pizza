@@ -1,40 +1,28 @@
 import React from 'react';
-import axios from 'axios';
 import qs from 'qs';
 import Categories from '../components/Categories.js';
 import Sort from '../components/Sort.js';
 import PizzaBlock from '../components/PizzaBLock/';
 import Skeleton from '../components/PizzaBLock/Skeleton.js';
 
-import { PizzasDataParams } from '../redux/slices/pizzasSlice.js';
+import { PizzasDataParams, selectPizzas } from '../redux/slices/pizzasSlice.js';
 import { sortType } from '../components/Sort.js';
 
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import type { RootState } from '../redux/store.js';
-import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice.js';
+import { selectFilter, setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice.js';
 import Pagination from '../components/Pagination/index.js';
 import { pizzasData } from '../redux/slices/pizzasSlice.js';
-import CartEmpty from '../components/CartEmpty.js';
-
-interface Pizza {
-  id: number;
-  imageUrl: string;
-  name: string;
-  types: number[];
-  sizes: number[];
-  price: number;
-  category: number;
-  rating?: number;
-}
+import { selectSearch } from '../redux/slices/searchSlice.js';
 
 const Home: React.FC = () => {
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
   //usuing redux
-  const { categoryId, sort, currentPage } = useSelector((state: RootState) => state.filter);
+  const { categoryId, sort, currentPage } = useSelector(selectFilter);
   const sortItems = sort.sortProperty;
   const dispatch = useDispatch();
+
   const onChangeCategory = (index: number) => {
     dispatch(setCategoryId(index));
   };
@@ -42,7 +30,7 @@ const Home: React.FC = () => {
     dispatch(setCurrentPage(number));
   };
 
-  const { pizzasItems, loading, error } = useSelector((state: RootState) => state.pizzas);
+  const { pizzasItems, loading, error } = useSelector(selectPizzas);
 
   const fetchPizzas = async () => {
     // simplify logic
@@ -64,7 +52,7 @@ const Home: React.FC = () => {
     window.scrollTo(0, 0);
   };
 
-  const searchValue = useSelector((state: RootState) => state.search.searchValue);
+  const searchValue = useSelector(selectSearch);
 
   // if there was a first rendering , that checking URL parametres and save them in redux toolkit
   React.useEffect(() => {
