@@ -1,26 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addItem, decrementItem, removeItem } from '../redux/slices/cartsSlice';
+import { incrementItem, decrementItem, removeItem } from '../redux/slices/cartsSlice';
+import { iPizza } from '../types';
 
-interface iCartItem {
-  name: string;
-  sizes: number;
-  price: number;
-  imageUrl: string;
-  types: number;
-  id?: number;
-  count: number;
-}
-
-const CartItem: React.FC<iCartItem> = ({ id, name, types, price, count, imageUrl, sizes }) => {
+const CartItem: React.FC<iPizza> = ({ id, name, types, price, count, imageUrl, sizes }) => {
   const dispatch = useDispatch();
 
   const incrementCount = () => {
-    dispatch(
-      addItem({
-        id,
-      }),
-    );
+    dispatch(incrementItem(id));
   };
 
   const decrementCount = () => {
@@ -31,7 +18,7 @@ const CartItem: React.FC<iCartItem> = ({ id, name, types, price, count, imageUrl
   };
   const onClickRemoveItem = () => {
     if (window.confirm('Are you sure to remove ?')) {
-      dispatch(removeItem(Number(id)));
+      dispatch(removeItem(id));
     }
   };
 
@@ -74,7 +61,7 @@ const CartItem: React.FC<iCartItem> = ({ id, name, types, price, count, imageUrl
         </div>
       </div>
       <div className="cart__item-price">
-        <b>{price * count}</b>
+        <b>{price * count!}</b>
       </div>
       <div className="cart__item-remove">
         <div onClick={onClickRemoveItem} className="button button--outline button--circle">

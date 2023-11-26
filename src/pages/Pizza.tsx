@@ -1,17 +1,7 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
-export interface iPizza {
-  id: string;
-  imageUrl: string;
-  name: string;
-  types: number[];
-  sizes: number[];
-  price: number;
-  category: number;
-  rating: number;
-}
+import { iPizza } from '../types';
 
 const Pizza: React.FC = () => {
   const [pizza, setPizza] = React.useState<iPizza>();
