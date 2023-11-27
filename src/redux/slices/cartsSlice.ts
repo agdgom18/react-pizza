@@ -29,8 +29,8 @@ export const cartSlice = createSlice({
     },
     incrementItem(state, action) {
       const findItem = state.items.find((obj) => obj.id === action.payload);
-      if (findItem) {
-        findItem.count!++;
+      if (findItem?.count) {
+        findItem.count++;
       }
       state.totalPrice = state.items.reduce((sum, obj) => {
         return obj.price! * obj.count! + sum;
@@ -46,7 +46,7 @@ export const cartSlice = createSlice({
       }, 0);
     },
 
-    removeItem(state, action: PayloadAction<number>) {
+    removeItem(state, action: PayloadAction<string>) {
       state.items = state.items.filter((obj) => obj.id !== action.payload);
     },
 

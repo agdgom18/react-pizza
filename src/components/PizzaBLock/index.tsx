@@ -5,10 +5,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../../redux/store';
 import { addItem } from '../../redux/slices/cartsSlice';
 import { Link } from 'react-router-dom';
-import { iCartItem, iPizza } from '../../types';
+import { iCartItem, Pizza } from '../../types';
 
 const typeNames = ['thin', 'traditional'];
-const PizzaBlock: React.FC<iPizza> = ({ name, sizes, price, imageUrl, types, id }) => {
+const PizzaBlock: React.FC<Pizza> = ({ name, sizes, price, imageUrl, types, id }) => {
   const [isActiveType, setIsActiveType] = React.useState(0);
   const [isActiveSize, setIsActiveSize] = React.useState(0);
 
@@ -24,8 +24,8 @@ const PizzaBlock: React.FC<iPizza> = ({ name, sizes, price, imageUrl, types, id 
       name,
       price,
       imageUrl,
-      types: typeNames[isActiveType],
-      sizes: [sizes[isActiveSize]],
+      type: typeNames[isActiveType],
+      size: sizes[isActiveSize],
     };
 
     dispatch(addItem(item));
@@ -40,19 +40,19 @@ const PizzaBlock: React.FC<iPizza> = ({ name, sizes, price, imageUrl, types, id 
         </Link>
         <div className="pizza-block__selector">
           <ul>
-            {types.map((el, idx) => {
+            {types.map((type, idx) => {
               return (
                 <li onClick={() => setIsActiveType(idx)} className={isActiveType === idx ? 'active' : ''} key={idx}>
-                  {el === 0 ? 'thin' : 'traditional'}
+                  {type}
                 </li>
               );
             })}
           </ul>
           <ul>
-            {sizes.map((el, idx) => {
+            {sizes.map((size, idx) => {
               return (
                 <li onClick={() => setIsActiveSize(idx)} className={isActiveSize === idx ? 'active' : ''} key={idx}>
-                  {el} cm.
+                  {size} cm.
                 </li>
               );
             })}

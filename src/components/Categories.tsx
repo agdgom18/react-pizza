@@ -1,10 +1,7 @@
 import React from 'react';
+import { CategoriesProps } from '../types';
 
-interface MyProps {
-  category: number;
-  onClickCategory: (arg: number) => void;
-}
-const Categories: React.FC<MyProps> = ({ category, onClickCategory }) => {
+const Categories: React.FC<CategoriesProps> = ({ category, onClickCategory }) => {
   const categoryList = ['All', 'Meat', 'Vegetarian', 'Grill', 'Spicy', 'Closed'];
 
   return (

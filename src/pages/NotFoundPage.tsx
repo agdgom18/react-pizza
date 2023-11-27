@@ -1,6 +1,6 @@
 import NotFound from '../components/NotFoundBlock';
-
-const NotFoundPage = () => {
+import React from 'react';
+const NotFoundPage: React.FC = () => {
   return <NotFound />;
 };
 

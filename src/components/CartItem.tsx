@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { incrementItem, decrementItem, removeItem } from '../redux/slices/cartsSlice';
-import { iPizza } from '../types';
+import { iCartItem } from '../types';
 
-const CartItem: React.FC<iPizza> = ({ id, name, types, price, count, imageUrl, sizes }) => {
+const CartItem: React.FC<iCartItem> = ({ id, name, type, price, count, imageUrl, size }) => {
   const dispatch = useDispatch();
 
   const incrementCount = () => {
@@ -30,7 +30,7 @@ const CartItem: React.FC<iPizza> = ({ id, name, types, price, count, imageUrl, s
       <div className="cart__item-info">
         <h3>{name}</h3>
         <p>
-          {types}, {sizes} см.
+          {type}, {size} см.
         </p>
       </div>
       <div className="cart__item-count">

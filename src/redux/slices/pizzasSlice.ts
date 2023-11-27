@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import type { RootState } from '../store';
+import { Pizza } from '../../types';
 interface State {
-  pizzasItems: unknown[];
+  pizzasItems: Pizza[];
   loading: boolean;
   error: string | undefined;
 }
@@ -46,8 +47,13 @@ const pizzasSlice = createSlice({
     });
 
     builder.addCase(pizzasData.fulfilled, (state, action) => {
+      const typesOfPizza = ['thin', 'traditional'];
+      const pizzas: Pizza[] = action.payload.map((pizza: any) => {
+        return { ...pizza, types: pizza.types.map((el: number) => typesOfPizza[el]) };
+      });
+
       state.loading = false;
-      state.pizzasItems = action.payload;
+      state.pizzasItems = pizzas;
       state.error = '';
     });
     builder.addCase(pizzasData.rejected, (state, action) => {

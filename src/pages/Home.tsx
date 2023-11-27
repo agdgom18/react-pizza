@@ -6,14 +6,13 @@ import PizzaBlock from '../components/PizzaBLock/';
 import Skeleton from '../components/PizzaBLock/Skeleton.js';
 
 import { PizzasDataParams, selectPizzas } from '../redux/slices/pizzasSlice.js';
-import { sortType } from '../components/Sort.js';
-
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectFilter, setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice.js';
 import Pagination from '../components/Pagination/index.js';
 import { pizzasData } from '../redux/slices/pizzasSlice.js';
 import { selectSearch } from '../redux/slices/searchSlice.js';
+import { sortType } from '../utils/sortTypes.js';
 
 const Home: React.FC = () => {
   const isSearch = React.useRef(false);
@@ -41,6 +40,7 @@ const Home: React.FC = () => {
     const search = searchValue ? `search=${searchValue}` : '';
 
     dispatch(
+      //@ts-ignore
       pizzasData({
         categoryOrder,
         sortOrder,
