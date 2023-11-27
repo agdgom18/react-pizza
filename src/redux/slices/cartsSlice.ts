@@ -7,14 +7,22 @@ const initialState: iCartSlice = {
   totalPrice: 0,
   items: [],
 };
+type SearchParams = {
+  id: string;
+  size: number;
+  type: string;
+};
+const findElement = (arr: iCartItem[], searchParams: SearchParams): iCartItem | undefined => {
+  const { id, size, type } = searchParams;
+  return arr.find((obj: any) => obj.id === id && obj.size === size && obj.type === type);
+};
 
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
     addItem(state, action: PayloadAction<iCartItem>) {
-      const findItem = state.items.find((obj) => obj.id === action.payload.id);
-
+      const findItem = findElement(state.items, action.payload);
       if (findItem?.count) {
         findItem.count++;
       } else {
@@ -28,7 +36,7 @@ export const cartSlice = createSlice({
       }, 0);
     },
     incrementItem(state, action) {
-      const findItem = state.items.find((obj) => obj.id === action.payload);
+      const findItem = findElement(state.items, action.payload);
       if (findItem?.count) {
         findItem.count++;
       }
@@ -37,17 +45,24 @@ export const cartSlice = createSlice({
       }, 0);
     },
     decrementItem(state, action) {
-      const findItem = state.items.find((obj) => obj.id === action.payload);
+      const findItem = findElement(state.items, action.payload);
       if (findItem) {
         findItem.count!--;
+      }
+      if (findItem?.count === 0) {
+        state.items = state.items.filter((obj) => obj.count !== 0);
       }
       state.totalPrice = state.items.reduce((sum, obj) => {
         return obj.price! * obj.count! + sum;
       }, 0);
     },
 
-    removeItem(state, action: PayloadAction<string>) {
-      state.items = state.items.filter((obj) => obj.id !== action.payload);
+    removeItem(state, action: PayloadAction<SearchParams>) {
+      const { id, size, type } = action.payload;
+      state.items = state.items.filter((obj) => obj.id !== id || obj.size !== size || obj.type !== type);
+      state.totalPrice = state.items.reduce((sum, obj) => {
+        return obj.price! * obj.count! + sum;
+      }, 0);
     },
 
     clearItems(state) {

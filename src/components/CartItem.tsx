@@ -7,18 +7,18 @@ const CartItem: React.FC<iCartItem> = ({ id, name, type, price, count, imageUrl,
   const dispatch = useDispatch();
 
   const incrementCount = () => {
-    dispatch(incrementItem(id));
+    dispatch(incrementItem({ id, size, type }));
   };
 
   const decrementCount = () => {
     if (!count) {
       return;
     }
-    dispatch(decrementItem(id));
+    dispatch(decrementItem({ id, size, type }));
   };
   const onClickRemoveItem = () => {
     if (window.confirm('Are you sure to remove ?')) {
-      dispatch(removeItem(id));
+      dispatch(removeItem({ id, size, type }));
     }
   };
 

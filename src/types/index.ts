@@ -66,5 +66,5 @@ export interface iCartItem {
   size: number;
   type: string;
   price: number;
-  count?: number;
+  count: number;
 }

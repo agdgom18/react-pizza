@@ -14,9 +14,11 @@ const PizzaBlock: React.FC<Pizza> = ({ name, sizes, price, imageUrl, types, id }
 
   const dispatch = useDispatch();
 
-  const cartItem = useSelector((state: RootState) => state.cart.items.find((obj) => obj.id === id));
-
-  const count = cartItem ? cartItem.count! : 0;
+  const cartItemArray: iCartItem[] = useSelector((state: RootState) => state.cart.items).filter((cartItem) => cartItem.id === id);
+  let count = 0;
+  cartItemArray.forEach((cartItem) => {
+    count += cartItem.count;
+  });
 
   const onClickAdd = () => {
     const item: iCartItem = {
@@ -26,6 +28,7 @@ const PizzaBlock: React.FC<Pizza> = ({ name, sizes, price, imageUrl, types, id }
       imageUrl,
       type: typeNames[isActiveType],
       size: sizes[isActiveSize],
+      count: 1,
     };
 
     dispatch(addItem(item));
